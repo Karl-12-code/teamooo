@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audios</title>
+    <style>
+        body {
+            font-family: Verdana, sans-serif;
+            background-color: #f0f8ff;
+            color: #333;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-image: url('https://www.publicdomainpictures.net/pictures/320000/velka/cartoon-landscape-background.jpg');
+            background-size: cover;
+            animation: colorChange 10s infinite;
+        }
+
+        @keyframes colorChange {
+            0% { background-color: #f0f8ff; }
+            50% { background-color: #ffebcd; }
+            100% { background-color: #f0f8ff; }
+        }
+
+        h1 {
+            color: #ff4500;
+            font-size: 3em;
+            margin-top: 20px;
+        }
+
+        .audio-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 50px;
+        }
+
+        .audio-box {
+            background: #fff;
+            border: 3px solid #ff4500;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
+            width: 60%;
+            max-width: 400px;
+        }
+
+        .audio-box:hover {
+            transform: scale(1.05);
+        }
+
+        audio {
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .cloud {
+            position: absolute;
+            width: 100px; /* Ajusta el tamaño de la imagen según sea necesario */
+            height: 100px; /* Ajusta el tamaño de la imagen según sea necesario */
+            animation: float 2s infinite ease-in-out; /* Aumenta la velocidad del movimiento */
+            background-size: cover; /* Para asegurar que la imagen cubra el div */
+            cursor: grab; /* Cambia el cursor al pasar sobre la nube */
+        }
+
+        /* Esquina superior derecha */
+        .cloud.top-right {
+            top: 5%;
+            right: 5%;
+            background-image: url('ejemplo2.gif'); /* Cambia la ruta a tu archivo */
+        }
+
+        /* Esquina inferior izquierda */
+        .cloud.bottom-left {
+            bottom: 5%;
+            left: 5%;
+            background-image: url('ejemplo.png'); /* Cambia la ruta a tu archivo */
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(20px); }
+            100% { transform: translateY(0); }
+        }
+
+    </style>
+</head>
+<body>
+    <h1></h1>
+
+    <div class="audio-container">
+        <div class="audio-box">
+            <audio controls>
+                <source src="https://www.dropbox.com/scl/fi/20z3inwnm7f6lrm9542fk/audio1.mp3?rlkey=ertmmfwa9sqau8djqez4ok4vc&st=tre85sbs&dl=1" type="audio/mpeg">
+                Tu navegador no soporta audio HTML5.
+            </audio>
+        </div>
+        <div class="audio-box">
+            <audio controls>
+                <source src="https://www.dropbox.com/scl/fi/eyec4m2v530v40wi9z6p7/audio3.mp3?rlkey=08ggipsackwxl3de4ajcalscc&st=idkbm2kd&dl=1" type="audio/mpeg">
+                Tu navegador no soporta audio HTML5.
+            </audio>
+        </div>
+        <div class="audio-box">
+            <audio controls>
+                <source src="https://www.dropbox.com/scl/fi/i4l88iv8ht6qljf73vd04/audio4.mp3?rlkey=pqzm76y2xezojj37p6ol3tcpz&st=fbdo9cxf&dl=1" type="audio/mpeg">
+                Tu navegador no soporta audio HTML5.
+            </audio>
+        </div>
+        <div class="audio-box">
+            <audio controls>
+                <source src="https://www.dropbox.com/scl/fi/lydpp22dwpwq4bcvyis16/PTT-20241009-WA0027.opus?rlkey=p46qz1u7p2inn06ktc4qivyij&st=3y5gf1xs&dl=1" type="audio/ogg">
+                Tu navegador no soporta audio HTML5.
+            </audio>
+        </div>
+        <div class="audio-box">
+            <audio controls>
+                <source src="https://www.dropbox.com/scl/fi/xlcuj17xmowlz4lboeg2t/PTT-20241009-WA0026.opus?rlkey=9h7wp4wyh0zowemkp2xg93qjo&st=kbiih8qc&dl=1" type="audio/ogg">
+                Tu navegador no soporta audio HTML5.
+            </audio>
+        </div>
+    </div>
+
+    <div class="cloud top-right"></div>
+    <div class="cloud bottom-left"></div>
+
+    <script>
+        // Hacer las nubes movibles
+        const clouds = document.querySelectorAll('.cloud');
+
+        clouds.forEach(cloud => {
+            let isDragging = false;
+
+            cloud.addEventListener('mousedown', () => {
+                isDragging = true;
+                cloud.style.cursor = 'grabbing';
+            });
+
+            cloud.addEventListener('mouseup', () => {
+                isDragging = false;
+                cloud.style.cursor = 'grab';
+            });
+
+            cloud.addEventListener('mousemove', (event) => {
+                if (isDragging) {
+                    const x = event.clientX - cloud.offsetWidth / 2;
+                    const y = event.clientY - cloud.offsetHeight / 2;
+                    cloud.style.left = `${x}px`;
+                    cloud.style.top = `${y}px`;
+                }
+            });
+
+            cloud.addEventListener('touchstart', () => {
+                isDragging = true;
+                cloud.style.cursor = 'grabbing';
+            });
+
+            cloud.addEventListener('touchend', () => {
+                isDragging = false;
+                cloud.style.cursor = 'grab';
+            });
+
+            cloud.addEventListener('touchmove', (event) => {
+                if (isDragging) {
+                    const touch = event.touches[0];
+                    const x = touch.clientX - cloud.offsetWidth / 2;
+                    const y = touch.clientY - cloud.offsetHeight / 2;
+                    cloud.style.left = `${x}px`;
+                    cloud.style.top = `${y}px`;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

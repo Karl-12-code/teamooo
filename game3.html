@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Memorama</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- CSS -->
+    <!-- efectos visuales -->
+    <style>
+        :root {
+            --w: calc(70vw / 6);
+            --h: calc(70vh / 4);
+        }
+
+        * {
+            transition: all 0.5s;
+        }
+
+        body {
+            padding: 0;
+            margin: 0;
+            -webkit-perspective: 1000;
+            background: powderblue;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-family: calibri;
+        }
+
+        div {
+            display: inline-block;
+        }
+
+        .area-tarjeta,
+        .tarjeta,
+        .cara {
+            cursor: pointer;
+            width: var(--w);
+            min-width: 100px;
+            height: var(--h);
+        }
+
+        .tarjeta {
+            position: relative;
+            transform-style: preserve-3d;
+            animation: iniciar 5s;
+        }
+
+        .cara {
+            position: absolute;
+            backface-visibility: hidden;
+            box-shadow: inset 0 0 0 5px white;
+            font-size: 500%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .trasera {
+            background-color: lightcyan;
+            transform: rotateY(180deg);
+        }
+
+        .superior {
+            background: linear-gradient(orange, darkorange);
+        }
+
+        .nuevo-juego {
+            cursor: pointer;
+            background: linear-gradient(orange, darkorange);
+            padding: 20px;
+            border-radius: 50px;
+            border: white 5px solid;
+            font-size: 130%;
+        }
+
+        @keyframes iniciar {
+            20%,
+            90% {
+                transform: rotateY(180deg);
+            }
+
+            0%,
+            100% {
+                transform: rotateY(0deg);
+            }
+        }
+    </style>
+
+    <!-- HTML -->
+    <!-- estructura visual -->
+
+    <div id="tablero">
+    </div>
+
+    <br>
+
+    <div class="nuevo-juego" onclick="generarTablero()">
+        Nuevo Juego
+    </div>
+
+    <!-- JS -->
+    <!-- parte lógica -->
+    <script>
+
+        let iconos = []
+        let selecciones = []
+
+        generarTablero()
+
+        function cargarIconos() {
+            iconos = [
+                '<img src="https://www.dropbox.com/scl/fi/fj68opnax1qjmdw7zi6zv/img2.jpg?rlkey=etndvyov1df4fhzj7rsumau10&dl=1" width="100%">',
+                '<img src="https://www.dropbox.com/scl/fi/8e3zzb9e35h73nj2u0h31/img1.jpg?rlkey=3bkjwfh9dkrau29ebeo52z9yx&dl=1" width="100%">',
+                '<img src="https://www.dropbox.com/scl/fi/k939wwpq2om8wnl0dxpre/img3.jpg?rlkey=ff98ls9vteu4l13h0fqpq3x5p&dl=1" width="100%">',
+                '<img src="https://www.dropbox.com/scl/fi/d18tx1eazeuvc1p1wvkd5/img4.jpg?rlkey=32w86fp3h6o9v106u11b092s1&dl=1" width="100%">',
+                '<img src="https://www.dropbox.com/scl/fi/8hkwxi8zcg8hexeyng5lx/img5.jpg?rlkey=mjseu81g0q3nr5aavm2xqi4h4&dl=1" width="100%">',
+                '<img src="https://www.dropbox.com/scl/fi/dq7vg24mu63puughebr8q/img6.jpg?rlkey=lscagqgg0r5x2vzrfrscc3gif&dl=1" width="100%">',
+                '<img src="https://www.dropbox.com/scl/fi/998hyo7328yhda0xif7zn/img7.jpg?rlkey=hsafszuqgt567t19b2dn0o3gv&dl=1" width="100%">',
+                '<img src="https://www.dropbox.com/scl/fi/rdnrns0sne70j1r01gy4l/img8.jpg?rlkey=hzh2ls086me722szerttpu7i0&dl=1" width="100%">',
+                '<img src="https://www.dropbox.com/scl/fi/0cpl6k1u7izdm4pm7d8ai/img9.jpg?rlkey=de5rkx4qpdbjxz6woypoegnt9&dl=1" width="100%">',
+                '<img src="https://www.dropbox.com/scl/fi/r1wozw5st8dg2f7pewpqr/img10.jpg?rlkey=yyncwze8e5m7jcl5uonj41hbr&dl=1" width="100%">',
+                '<img src="https://www.dropbox.com/scl/fi/uhplge85dfxq3df791ldt/img11.jpg?rlkey=cru75yln0t2nqb7y9j06fl5cq&dl=1" width="100%">',
+                '<img src="https://www.dropbox.com/scl/fi/o4c9su7p47ruvdk1b2k1l/img12.jpg?rlkey=pbja2l9cfz48x1ygzdup6v28p&dl=1" width="100%">',
+            ]
+        }
+
+        function generarTablero() {
+            cargarIconos()
+            let len = iconos.length
+            selecciones = []
+            let tablero = document.getElementById("tablero")
+            let tarjetas = []
+            
+            for (let i = 0; i < len * 2; i++) {
+                tarjetas.push(`
+                <div class="area-tarjeta" onclick="seleccionarTarjeta(${i})">
+                    <div class="tarjeta" id="tarjeta${i}">
+                        <div class="cara trasera" id="trasera${i}">
+                            ${iconos[0]}
+                        </div>
+                        <div class="cara superior">
+                            <i class="far fa-question-circle"></i>
+                        </div>
+                    </div>
+                </div>        
+                `)
+                if (i % 2 == 1) {
+                    iconos.splice(0, 1)
+                }
+            }
+            tarjetas.sort(() => Math.random() - 0.5)
+            tablero.innerHTML = tarjetas.join(" ")
+        }
+
+        function seleccionarTarjeta(i) {
+            let tarjeta = document.getElementById("tarjeta" + i)
+            if (tarjeta.style.transform != "rotateY(180deg)") {
+                tarjeta.style.transform = "rotateY(180deg)"
+                selecciones.push(i)
+            }
+            if (selecciones.length == 2) {
+                deseleccionar(selecciones)
+                selecciones = []
+            }
+        }
+
+        function deseleccionar(selecciones) {
+            setTimeout(() => {
+                let trasera1 = document.getElementById("trasera" + selecciones[0])
+                let trasera2 = document.getElementById("trasera" + selecciones[1])
+                if (trasera1.innerHTML != trasera2.innerHTML) {
+                    let tarjeta1 = document.getElementById("tarjeta" + selecciones[0])
+                    let tarjeta2 = document.getElementById("tarjeta" + selecciones[1])
+                    tarjeta1.style.transform = "rotateY(0deg)"
+                    tarjeta2.style.transform = "rotateY(0deg)"
+                } else {
+                    trasera1.style.background = "plum"
+                    trasera2.style.background = "plum"
+                }
+            }, 1000);
+        }
+
+    </script>
+
+</body>
+
+</html>

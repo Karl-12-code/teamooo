@@ -1,0 +1,131 @@
+/* Fondo interactivo */
+body, html {
+    background: pink; /* Punto y coma añadido */
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#content {
+    background: url('https://www.dropbox.com/scl/fi/59xq1iup8as9w0iaov28h/IMG_20241022_010936.jpg?rlkey=hci6ypm1m5xb6pwjm0anm70e8&st=be1bojp3&raw=1') no-repeat center center fixed;
+    background-size: cover;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    display: block;
+}
+
+.video {
+    background-color: transparent; /* Asegura que no haya fondo */
+    position: absolute;
+    width: 300px; /* Aumentar el ancho del video */
+    height: auto;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: transform 0.5s ease-in-out; /* Suavizar la transición */
+    animation: rotate 5s linear infinite;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+/* Sección de Canciones */
+#song-section {
+    position: absolute;
+    left: 1%; /* Mover más a la izquierda */
+    top: 48%;
+    transform: translateY(-50%);
+    color: white;
+    z-index: 1; /* Asegura que esté sobre otros elementos */
+}
+
+#song-list {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    width: 450px; /* Aumentar el ancho de la lista de canciones */
+}
+
+.song {
+    display: flex;
+    align-items: center;
+    background-color: rgba(24, 24, 24, 0.8); /* Añadir opacidad */
+    padding: 10px;
+    border-radius: 8px;
+    transition: background-color 0.3s;
+}
+
+.song:hover {
+    background-color: rgba(40, 40, 40, 0.9); /* Añadir opacidad al hover */
+}
+
+.song img {
+    width: 60px;
+    height: 60px;
+    border-radius: 4px;
+    margin-right: 15px;
+}
+
+.song-info h4 {
+    margin: 0;
+    font-size: 16px;
+    color: white;
+}
+
+.song-info p {
+    margin: 0;
+    color: #b3b3b3;
+    font-size: 14px;
+}
+
+/* Botones de play y tiempo */
+.play-button {
+    background-color: #1db954; /* Color verde de Spotify */
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: auto; /* Para empujar a la derecha */
+}
+
+.play-button:hover {
+    background-color: #1aa34a; /* Color más oscuro al hacer hover */
+}
+
+.time {
+    color: #b3b3b3;
+    font-size: 14px;
+    margin-left: 10px; /* Espacio entre el botón y el tiempo */
+}
+
+.audio-button {
+    position: absolute;
+    top: 20px; /* Ajusta el espacio desde la parte superior */
+    right: 20px; /* Ajusta el espacio desde la derecha */
+    background-color: #ffa07a; /* Color de fondo similar al botón de Play */
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none; /* Eliminar subrayado */
+    font-size: 16px;
+    cursor: pointer;
+    z-index: 2; /* Asegúrate de que esté por encima de otros elementos */
+}
+
+.audio-button:hover {
+    background-color: #ff8c42; /* Color más oscuro al hacer hover */
+}
